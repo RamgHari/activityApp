@@ -1,14 +1,18 @@
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native'
-import React from 'react'
-
+import React,{useState} from 'react'
+import { AntDesign } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 export default function ActivityScreen () {
     const activityItems = [
         { title: 'Running' }, { title: 'Cooking' }, { title: 'Working' }, { title: 'Reading' }, { title: 'Walking' }, { title: 'Sleeping' },
     ]
+    const [start, setstart] = useState(false)
     return (
         <View>
             <View style={styles.activityItemContainer} >
-                <Text style={styles.headingText}>Select what you are doing</Text>
+                <Text style={[styles.headingText,{fontSize:18}]}>Select what you are doing</Text>
                 <View style={styles.listConatiner} >
                     {
                         activityItems.map( item => {
@@ -19,6 +23,13 @@ export default function ActivityScreen () {
                                         style={styles.button}
                                         onPress={() => console.log( item.title )}
                                     >
+                                        {item.title == 'Running'? 
+                                        <FontAwesome5 name="running" size={20} color="black" />:item.title == 'Cooking'?
+                                        <MaterialCommunityIcons name="chef-hat" size={20} color="black" /> :item.title == 'Working'?
+                                        <MaterialIcons name="work" size={20} color="black" />: item.title == 'Reading'?
+                                        <FontAwesome5 name="book-reader" size={20} color="black" />:item.title == 'Walking'?
+                                        <FontAwesome5 name="walking" size={20} color="black" />:item.title == 'Sleeping'&&
+                                        <MaterialCommunityIcons name="sleep" size={20} color="black" />}
                                         <Text style={styles.text} >{item.title}</Text>
                                     </TouchableOpacity>
                                 </View>
@@ -29,11 +40,14 @@ export default function ActivityScreen () {
             </View>
             <View style={styles.timerSection}>
                 <Text style={styles.headingText}>Start tracking</Text>
-                <Text style={styles.headingText}></Text>
+                {start ? <FontAwesome5 name="stop-circle" size={40} color="red" style={{alignSelf:'center'}} onPress={()=>{setstart(!start)}}/> :
+                <AntDesign name="playcircleo" size={40} color="black" style={{alignSelf:'center'}} onPress={()=>{setstart(!start)}}/>}
             </View>
 
             <View style={styles.trackRecordSection}>
-            <Text style={styles.headingText}>Time tracked</Text>
+                <View style={styles.trackRecordHeadingSection}>
+            <Text style={[styles.headingText,{paddingVertical:5}]}>Time tracked</Text>
+            </View>
             <ScrollView >
                 <View>
                     <View style={styles.tractRecordDaysHeading}>
@@ -83,8 +97,8 @@ export default function ActivityScreen () {
 const styles = StyleSheet.create( {
     activityItemContainer: {
         flex: 1,
-        marginTop:20,
-        // paddingHorizontal: 50,
+        marginTop:50,
+        paddingHorizontal: 50,
     },
     headingText: {
         textAlign: 'center',
@@ -98,13 +112,23 @@ const styles = StyleSheet.create( {
         justifyContent: 'space-between',
     },
     button: {
-        paddingHorizontal: 10,
-        paddingVertical: 20,
+        paddingHorizontal: 15,
+        paddingVertical: 10,
         alignItems: 'center',
-        borderColor: 'rgba(128, 128, 128, 0.479)',
-        borderWidth: 2,
+        // borderColor: 'rgba(128, 128, 128, 0.479)',
+        // borderWidth: 2,
         borderRadius: 5,
         margin: '5%',
+        backgroundColor:'orange',
+        shadowColor: "#000",
+      shadowOffset: {
+         width: 0,
+         height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+
+      elevation: 5,
     },
     text: {
         textAlign: 'center',
@@ -113,19 +137,38 @@ const styles = StyleSheet.create( {
         fontSize: 13
     },
     timerSection: {
-        marginTop:70,
+        marginTop:50,
         paddingBottom:20,
         marginHorizontal:20,
-        borderBottomWidth:1,
-        borderBottomColor:'gray'
     },
     trackRecordSection: {
         flex:1.5,
         paddingBottom:20,
-        paddingTop:5,
+        // paddingTop:5,
         marginHorizontal:20,
-        borderBottomWidth:1,
-        borderBottomColor:'gray'
+        backgroundColor:'#ffffff',
+        // borderWidth:1,
+        borderRadius: 10,
+        borderColor:'gray',
+        shadowColor: "#000",
+      shadowOffset: {
+         width: 0,
+         height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+
+      elevation: 5,
+    },
+    trackRecordHeadingSection: {
+        backgroundColor: '#1FE0A2',
+        borderTopRightRadius:10,
+        borderTopLeftRadius: 10,
+        justifyContent:'center',
+        alignContent:'center',
+        alignItems: 'center'
+        // borderBottomWidth: 2,
+        // borderBottomColor: 'green'
     },
     tractRecordDaysHeading: {
         paddingLeft:10
@@ -134,11 +177,21 @@ const styles = StyleSheet.create( {
         paddingHorizontal: 10,
         paddingVertical: 10,
         alignItems: 'center',
-        borderColor: 'rgba(128, 128, 128, 0.479)',
-        borderWidth: 2,
-        borderRadius: 5,
+        backgroundColor:'#ffffff',
+        // borderColor: 'rgba(128, 128, 128, 0.479)',
+        // borderWidth: 2,
+        borderRadius: 10,
         margin: '5%',
         flexDirection: 'row',
         justifyContent: 'space-around',
+        shadowColor: "#000",
+      shadowOffset: {
+         width: 0,
+         height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+
+      elevation: 5,
     },
 } );
